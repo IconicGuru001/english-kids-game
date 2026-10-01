@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz de Vocabulario 🎈</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link href="https://googleapis.com" rel="stylesheet">
+  <style>
+    .emoji-display { font-size: 100px; margin: 20px 0; animation: pulse 2s infinite; }
+    .opciones-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 500px; margin: 0 auto; }
+    .btn-opcion { min-height: 70px; background-color: #4db5ff; box-shadow: 0 6px #008be3; }
+    .btn-opcion.correcta { background-color: #2ecc71 !important; box-shadow: 0 6px #27ae60 !important; }
+    .btn-opcion.incorrecta { background-color: #e74c3c !important; box-shadow: 0 6px #c0392b !important; }
+    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+  </style>
+</head>
+<body>
+  <div class="juego-container">
+    <header class="game-header">
+      <button class="btn-back" onclick="window.location.href='menu.html'">⬅️ Menú</button>
+      <div class="stats">Estrellas: <strong id="estrellas-count">0</strong> ⭐</div>
+    </header>
+
+    <h1 class="titulo-juego">¿Qué es esto? 🤔</h1>
+    <div id="emoji" class="emoji-display">⏳</div>
+    <button id="btn-mic" style="background-color: #9b59b6; box-shadow: 0 6px #8e44ad;">🎙️ Practicar Pronunciación (+2 ⭐)</button>
+
+    <p id="mensaje" class="mensaje-animado"></p>
+    <div id="opciones" class="opciones-container"></div>
+  </div>
+
+  <script src="assets/js/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>¡Bienvenidos al Juego de Inglés! 🚀</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link href="https://googleapis.com" rel="stylesheet">
+  <style>
+    .auth-box { max-width: 400px; margin: 40px auto; padding: 20px; background: #fff; border-radius: 16px; border: 3px solid #ff6b6b; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; text-align: left; }
+    .form-group input { padding: 15px; border-radius: 12px; border: 2px solid #ddd; font-size: 18px; }
+    .toggle-text { margin-top: 15px; cursor: pointer; color: #4db5ff; font-weight: 600; text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="juego-container">
+    <h1 style="font-size: 36px; color: #ff6b6b;">🌟 English Kids Game 🌟</h1>
+    <p style="font-size: 20px;">¡Aprende palabras divirtiéndote y gana estrellas!</p>
+
+    <div class="auth-box">
+      <h2 id="auth-title">Iniciar Sesión</h2>
+      <p id="auth-msg" class="mensaje-animado" style="font-size: 16px; color: #e74c3c;"></p>
+      
+      <form id="auth-form">
+        <div class="form-group">
+          <label for="username">👤 Nombre de Usuario:</label>
+          <input type="text" id="username" placeholder="Escribe tu nombre aquí..." required>
+        </div>
+        <div class="form-group">
+          <label for="password">🔑 Contraseña Secreta:</label>
+          <input type="password" id="password" placeholder="Tu contraseña..." required>
+        </div>
+        <button type="submit" id="btn-submit" style="width: 100%;">¡Vamos a Jugar! 🚀</button>
+      </form>
+      
+      <p id="toggle-auth" class="toggle-text">¿No tienes cuenta? Regístrate aquí</p>
+    </div>
+  </div>
+
+  <script>
+    let modoLogin = true;
+
+    document.getElementById('toggle-auth').addEventListener('click', () => {
+      modoLogin = !modoLogin;
+      document.getElementById('auth-title').textContent = modoLogin ? 'Iniciar Sesión' : 'Registrarse Nuevo';
+      document.getElementById('btn-submit').textContent = modoLogin ? '¡Vamos a Jugar! 🚀' : 'Crear mi Cuenta 🎉';
+      document.getElementById('toggle-auth').textContent = modoLogin ? '¿No tienes cuenta? Regístrate aquí' : '¿Ya tienes cuenta? Inicia sesión';
+      document.getElementById('auth-msg').textContent = '';
+    });
+
+    document.getElementById('auth-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const endpoint = modoLogin ? '/api/auth/login' : '/api/auth/register';
+
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          document.getElementById('auth-msg').textContent = data.error || 'Ocurrió un error';
+        } else {
+          // Success workflow pushes matching tokens directly to the menu dashboard hub
+          window.location.href = 'menu.html';
+        }
+      } catch (err) {
+        document.getElementById('auth-msg').textContent = 'Error conectando con el servidor 🥺';
+      }
+    });
+  </script>
+</body>
+</html>

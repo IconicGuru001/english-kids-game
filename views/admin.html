@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel del Profesor 🎓</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .form-admin { display: flex; flex-direction: column; gap: 10px; max-width: 400px; margin: 20px auto; }
+    .form-admin input { padding: 12px; border-radius: 8px; border: 2px solid #ccc; font-size: 16px; }
+    .table-vocab { width: 100%; margin-top: 30px; border-collapse: collapse; }
+    .table-vocab th, .table-vocab td { padding: 12px; border-bottom: 1px solid #ddd; text-align: left; }
+    .btn-del { min-height: 40px; padding: 0 15px; font-size: 14px; background: #e74c3c; box-shadow: 0 4px #c0392b;}
+  </style>
+</head>
+<body>
+  <div class="juego-container">
+    <h1>Panel de Control de Vocabulario 🎓</h1>
+    <button onclick="window.location.href='menu.html'">Volver al menú</button>
+
+    <!-- Word Creation Form -->
+    <form id="form-palabra" class="form-admin">
+      <input type="text" id="inp-en" placeholder="Word in English (e.g. Apple)" required>
+      <input type="text" id="inp-es" placeholder="Palabra en Español (e.g. Manzana)" required>
+      <input type="text" id="inp-emo" placeholder="Emoji token (e.g. 🍎)" required>
+      <input type="text" id="inp-cat" placeholder="Categoría (e.g. Comida)" required>
+      <button type="submit">➕ Añadir Palabra</button>
+    </form>
+
+    <!-- Word Display Table -->
+    <table class="table-vocab">
+      <thead>
+        <tr><th>Emoji</th><th>Inglés</th><th>Español</th><th>Categoría</th><th>Acción</th></tr>
+      </thead>
+      <tbody id="lista-vocabulario"></tbody>
+    </table>
+  </div>
+
+  <script>
+    async function cargarTabla() {
+      const res = await fetch('/api/admin/vocabulario');
+      if (res.status === 403 || res.status === 401) {
+        alert('¡Acceso denegado! Solo profesores.');
+        window.location.href = 'index.html';
+        return;
+      }
+      const palabras = await res.json();
+      const tbody = document.getElementById('lista-vocabulario');
+      tbody.innerHTML = '';
+      
+      palabras.forEach(p => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${p.emoji}</td>
+            <td><strong>${p.palabraEn}</strong></td>
+            <td>${p.palabraEs}</td>
+            <td>${p.categoria}</td>
+            <td><button class="btn-del" onclick="eliminarPalabra('${p._id}')">🗑️</button></td>
+          </tr>`;
+      });
+    }
+
+    document.getElementById('form-palabra').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        palabraEn: document.getElementById('inp-en').value,
+        palabraEs: document.getElementById('inp-es').value,
+        emoji: document.getElementById('inp-emo').value,
+        categoria: document.getElementById('inp-cat').value,
+      };
+
+      await fetch('/api/admin/vocabulario', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      document.getElementById('form-palabra').reset();
+      cargarTabla();
+    });
+
+    async function eliminarPalabra(id) {
+      if(confirm('¿Eliminar esta palabra?')) {
+        await fetch(`/api/admin/vocabulario/${id}`, { method: 'DELETE' });
+        cargarTabla();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', cargarTabla);
+  </script>
+</body>
+</html>
+
+

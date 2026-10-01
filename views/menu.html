@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menú Principal 🎮</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link href="https://googleapis.com" rel="stylesheet">
+  <style>
+    .perfil-card { background: #fff3cd; border: 3px solid #ffbc42; padding: 20px; border-radius: 20px; margin-bottom: 30px; display: inline-block; min-width: 300px; }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 600px; margin: 0 auto; }
+    .btn-menu { min-height: 100px; font-size: 22px; flex-direction: column; gap: 8px; }
+    .btn-menu.quiz { background-color: #4db5ff; box-shadow: 0 6px #008be3; }
+    .btn-menu.memoria { background-color: #ff9f43; box-shadow: 0 6px #d35400; }
+    .btn-menu.ranking { background-color: #2ecc71; box-shadow: 0 6px #27ae60; }
+    .btn-menu.admin { background-color: #9b59b6; box-shadow: 0 6px #8e44ad; display: none; } /* Hidden by default */
+    .btn-logout { background-color: #e74c3c; box-shadow: 0 6px #c0392b; min-height: 50px; margin-top: 30px; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <div class="juego-container">
+    <h1 style="margin-bottom: 10px;">¡Hola, <span id="username-display">...</span>! 👋</h1>
+    
+    <!-- Student Dynamic Profile Stats Box -->
+    <div class="perfil-card">
+      <h3 id="nivel-texto">Nivel: Cargando... ⏳</h3>
+      <p style="font-size: 20px; margin-top: 5px;">Estrellas Totales: <strong id="estrellas-total">0</strong> ⭐</p>
+    </div>
+
+    <!-- Interactive Navigation Hub Grid -->
+    <div class="menu-grid">
+      <button class="btn-menu quiz" onclick="window.location.href='quiz.html'">
+        <span>🎈 Jugar Quiz</span>
+      </button>
+      <button class="btn-menu memoria" onclick="window.location.href='memoria.html'">
+        <span>🧠 Juego de Memoria</span>
+      </button>
+      <button class="btn-menu ranking" onclick="window.location.href='ranking.html'">
+        <span>🏆 Ver Ranking</span>
+      </button>
+      <!-- Panel accessible only if the user profile role is teacher -->
+      <button id="btn-admin-panel" class="btn-menu admin" onclick="window.location.href='admin.html'">
+        <span>🎓 Panel del Profesor</span>
+      </button>
+    </div>
+
+    <button class="btn-logout" id="btn-cerrar-sesion">Cerrar Sesión 🚪</button>
+  </div>
+
+  <script src="assets/js/menu.js"></script>
+</body>
+</html>

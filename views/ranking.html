@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Salón de la Fama 🏆</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link href="https://googleapis.com" rel="stylesheet">
+  <style>
+    .ranking-list { list-style: none; max-width: 450px; margin: 30px auto; padding: 0; }
+    .ranking-item { background: #fff; padding: 15px 20px; margin-bottom: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 2px solid #ff9f43; font-size: 20px; }
+    .ranking-item.top3 { background: #fff3cd; border-color: #ffc107; font-weight: 600; transform: scale(1.03); }
+    .podium-icon { font-size: 24px; }
+  </style>
+</head>
+<body>
+  <div class="juego-container">
+    <h1>🏆 Top 10 Jugadores 🏆</h1>
+    <p>¡Los mejores maestros del inglés del momento!</p>
+    
+    <ul id="lista-ranking" class="ranking-list">
+      <li>Cargando campeones... ⏳</li>
+    </ul>
+
+    <button onclick="window.location.href='menu.html'">⬅️ Volver al Menú</button>
+  </div>
+
+  <script>
+    async function cargarRanking() {
+      try {
+        const res = await fetch('/api/juego/ranking');
+        const jugadores = await res.json();
+        const lista = document.getElementById('lista-ranking');
+        lista.innerHTML = '';
+
+        if(jugadores.length === 0) {
+          lista.innerHTML = '<li>¡Aún no hay puntuaciones registradas! ¡Sé el primero!</li>';
+          return;
+        }
+
+        jugadores.forEach((j, index) => {
+          let medalla = `${index + 1}º`;
+          let claseTop = '';
+          if (index === 0) { medalla = '🥇'; claseTop = 'top3'; }
+          else if (index === 1) { medalla = '🥈'; claseTop = 'top3'; }
+          else if (index === 2) { medalla = '🥉'; claseTop = 'top3'; }
+
+          lista.innerHTML += `
+            <li class="ranking-item ${claseTop}">
+              <span><span class="podium-icon">${medalla}</span> <strong>${j.username}</strong></span>
+              <span>Nivel ${j.nivel || 1} • ${j.estrellas} ⭐</span>
+            </li>`;
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    document.addEventListener('DOMContentLoaded', cargarRanking);
+  </script>
+</body>
+</html>

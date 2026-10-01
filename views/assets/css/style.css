@@ -1,0 +1,72 @@
+/* Global Reset and Kid-Friendly typography installation */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Fredoka', 'Comic Neue', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #e0f7fa 0%, #fff9c4 100%); /* Bright pastel gradients */
+  min-height: 100vh;
+  padding: 20px;
+  color: #2c3e50;
+}
+
+.juego-container {
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 30px;
+  border: 4px solid #4db5ff; /* Soft frame edge */
+  text-align: center;
+}
+
+/* Big Tap Target Custom Buttons matching 60px target guidelines */
+button, .btn-action {
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  min-height: 60px;
+  padding: 0 30px;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px #e64c4c;
+  transition: transform 0.1s, box-shadow 0.1s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px #e64c4c;
+}
+
+/* Visual headers for top performance bar indicators */
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 3px dashed #ff9f43;
+}
+
+.stats {
+  font-size: 22px;
+  font-weight: 600;
+  color: #ff9f43;
+}
+
+.mensaje-animado {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 15px 0;
+  color: #9b59b6;
+  min-height: 35px;
+}

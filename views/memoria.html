@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juego de Memoria 🧠</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/memoria.css">
+  <link href="https://googleapis.com" rel="stylesheet">
+</head>
+<body>
+  <div class="juego-container">
+    <header class="game-header">
+      <button class="btn-back" onclick="window.location.href='menu.html'">⬅️ Menú</button>
+      <div class="stats">
+        <span>Intentos: <strong id="intentos-count">0</strong></span>
+        <span>Estrellas: <strong id="estrellas-count">0</strong> ⭐</strong></span>
+      </div>
+    </header>
+
+    <h1 class="titulo-juego">¡Encuentra las Parejas! 🔮</h1>
+    <p id="mensaje-feedback" class="mensaje-animado"></p>
+
+    <div id="tablero-memoria" class="grid-tablero"></div>
+  </div>
+
+  <script src="assets/js/memoria.js"></script>
+</body>
+</html>
